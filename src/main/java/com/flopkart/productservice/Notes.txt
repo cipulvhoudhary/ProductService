@@ -1,0 +1,3 @@
+@Component/@Service/@Configuration - special class for spring boot to scan
+@Bean - way to tell spring to create an object of the method and store it in application context
+
