@@ -1,7 +1,8 @@
-package com.flopkart.productservice.controlleradvice;
+package com.flopkart.productservice.controllerAdvice;
 
 import com.flopkart.productservice.dtos.ExceptionDto;
 import com.flopkart.productservice.dtos.ProductNotFoundExceptionDto;
+import com.flopkart.productservice.exceptions.CategoryNotFoundException;
 import com.flopkart.productservice.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +21,19 @@ public class ProductServiceControllerAdvice {
     }
 
     @ExceptionHandler(ProductNotFoundException.class)
-    public ResponseEntity<ProductNotFoundExceptionDto> handleProductNotFoundException(Exception e) {
+    public ResponseEntity<ProductNotFoundExceptionDto> handleProductNotFoundException(ProductNotFoundException e) {
         ProductNotFoundExceptionDto productNotFoundExceptionDto = new ProductNotFoundExceptionDto();
-        String message = e.getMessage();
-        System.out.println(message);
-        
-        // TODO: Extract product id from message and set it in ProductNotFoundExceptionDto
-        
-        productNotFoundExceptionDto.setProductId(1L);
+        productNotFoundExceptionDto.setProductId(e.getProductId());
         productNotFoundExceptionDto.setMessage("Product not found");
         productNotFoundExceptionDto.setResolutionDetails("Check product id");
         return new ResponseEntity<>(productNotFoundExceptionDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ExceptionDto> handleCategoryNotFound() {
+        ExceptionDto exceptionDto = new ExceptionDto();
+        exceptionDto.setMessage("Category not found");
+        exceptionDto.setResolutionDetails("Check category id");
+        return new ResponseEntity<>(exceptionDto, HttpStatus.NOT_FOUND);
     }
 }

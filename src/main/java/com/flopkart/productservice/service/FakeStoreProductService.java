@@ -33,7 +33,7 @@ public class FakeStoreProductService implements ProductService{
         FakeStoreProductDto fakeStoreProduct = fakeStoreProductDto.getBody();
 
         if (fakeStoreProduct == null) {
-            throw new ProductNotFoundException("Product with id " + productId + " does not exist");
+            throw new   ProductNotFoundException("Product with id " + productId + " does not exist");
         }
 
         return getProductFromFakeStoreProductDto(fakeStoreProduct);
