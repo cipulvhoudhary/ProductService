@@ -35,7 +35,7 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public Product createProduct(Product product) throws CategoryNotFoundException {
+    public Product createProduct(Product product) {
 
         ProductValidator.isValidProduct(product);
 
@@ -46,6 +46,7 @@ public class SelfProductService implements ProductService {
         Product productForDb = getProductForDb(product, categoryForDb);
 
         return productRepository.save(productForDb);
+
     }
 
     @Override
