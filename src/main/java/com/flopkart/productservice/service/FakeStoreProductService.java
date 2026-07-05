@@ -5,7 +5,7 @@ import com.flopkart.productservice.exceptions.ProductNotFoundException;
 import com.flopkart.productservice.models.Category;
 import com.flopkart.productservice.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+//import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,15 +17,15 @@ import java.util.List;
 public class FakeStoreProductService implements ProductService{
 
     RestTemplate restTemplate;
-    @Autowired
-    private RestTemplateBuilder restTemplateBuilder;
+//    @Autowired
+//    private RestTemplateBuilder restTemplateBuilder;
 
     public FakeStoreProductService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     @Override
-    public Product getProductById(Long productId) throws ProductNotFoundException {
+    public Product getProductById(Long productId) {
         ResponseEntity<FakeStoreProductDto> fakeStoreProductDto =  restTemplate.getForEntity(
                 "https://fakestoreapi.com/products/" + productId,
                 FakeStoreProductDto.class);

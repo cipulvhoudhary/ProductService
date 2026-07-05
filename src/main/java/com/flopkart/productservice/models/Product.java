@@ -1,6 +1,8 @@
 package com.flopkart.productservice.models;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
 
