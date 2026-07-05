@@ -1,7 +1,5 @@
 package com.flopkart.productservice.controller;
 
-import com.flopkart.productservice.exceptions.CategoryNotFoundException;
-import com.flopkart.productservice.exceptions.ProductNotFoundException;
 import com.flopkart.productservice.models.Product;
 import com.flopkart.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,35 +11,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/products")
 public class ProductController {
 
-    ProductService productService;
+    private final ProductService productService;
 
     public ProductController(@Qualifier("selfProductService") ProductService productService) {
         this.productService = productService;
     }
 
-    // localhost8080/product/{id}
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") Long productId) throws ProductNotFoundException {
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long productId) {
         return new ResponseEntity<>(
                 productService.getProductById(productId),
                 HttpStatus.OK);
     }
 
-    // localhost8080/products/
     @GetMapping("/")
     public Iterable<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
-    // localhost8080/products/
     @PostMapping()
-    public Product saveProduct(@RequestBody Product product) throws CategoryNotFoundException {
+    public Product saveProduct(@RequestBody Product product) {
         return productService.createProduct(product);
     }
 
-    // localhost8080/products/id
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") Long productId) throws ProductNotFoundException {
+    public void deleteProduct(@PathVariable("id") Long productId) {
         productService.deleteProduct(productId);
     }
 

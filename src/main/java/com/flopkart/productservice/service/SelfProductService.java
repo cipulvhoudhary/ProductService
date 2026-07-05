@@ -1,6 +1,5 @@
 package com.flopkart.productservice.service;
 
-import com.flopkart.productservice.exceptions.CategoryNotFoundException;
 import com.flopkart.productservice.exceptions.ProductNotFoundException;
 import com.flopkart.productservice.models.Category;
 import com.flopkart.productservice.models.Product;
@@ -24,7 +23,7 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long productId) throws ProductNotFoundException {
+    public Product getProductById(Long productId) {
         return productRepository.findById(productId).orElseThrow(() ->
                 new ProductNotFoundException(productId, "Product with id " + productId + " not found"));
     }
@@ -35,7 +34,7 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public Product createProduct(Product product) throws CategoryNotFoundException {
+    public Product createProduct(Product product) {
 
         ProductValidator.isValidProduct(product);
 
@@ -46,10 +45,11 @@ public class SelfProductService implements ProductService {
         Product productForDb = getProductForDb(product, categoryForDb);
 
         return productRepository.save(productForDb);
+
     }
 
     @Override
-    public void deleteProduct(Long productId) throws ProductNotFoundException {
+    public void deleteProduct(Long productId) {
         if (!productRepository.existsById(productId)) {
             throw new ProductNotFoundException(productId, "The product with Id: " + productId + " does not exists");
         }
